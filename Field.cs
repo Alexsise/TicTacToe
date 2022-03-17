@@ -2,6 +2,9 @@ namespace TicTacToe;
 using static Field.Occupation;
 public static class Field
 {
+    public static Occupation[] GameField = new[] {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty};
+    public static Occupation WhosWon = Empty;
+    
     public enum Occupation
     {
         Empty = ' ', 

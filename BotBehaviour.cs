@@ -24,7 +24,7 @@ public static class BotBehaviour
                 // var bestScore = int.MinValue;
                 var score = MiniMax(ref gameField, 0, false);
                 gameField[i] = Empty;
-                if (score >= bestScore)
+                if (score > bestScore)
                 {
                     bestScore = score;
                     bestMove = i;

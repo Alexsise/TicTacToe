@@ -21,6 +21,7 @@ public static class Field
             if (gameField[i] == Empty) continue;
             if (gameField[i] != gameField[i + 1] || gameField[i + 1] != gameField[i + 2]) continue;
             whosWon = gameField[i];
+            // FieldRender(gameField);
             return true;
         }
 
@@ -29,15 +30,17 @@ public static class Field
             if (gameField[i] == Empty) continue;
             if (gameField[i] != gameField[i + 3] || gameField[i + 3] != gameField[i + 6]) continue;
             whosWon = gameField[i];
+            // FieldRender(gameField);
             return true;
         }
         
         if (gameField[4] != Empty)
         {
             if (gameField[6] == gameField[4] && gameField[4] == gameField[2] ||
-                gameField[0] == gameField[4] && gameField[4] == gameField[5])
+                gameField[0] == gameField[4] && gameField[4] == gameField[8])
             {
                 whosWon = gameField[4];
+                // FieldRender(gameField);
                 return true;
             }
         }

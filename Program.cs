@@ -9,25 +9,34 @@ public static class Program
     private const bool GameOver = false;
     public static void Main()
     {
-        
         while (!GameOver)
         {
-            Player.PlayerMove(GameField);
+            PlayerBehaviour.PlayerMove(ref GameField);
+            Console.Clear();
+            FieldRender(GameField);
             if (GameOverConditions(GameField, ref WhosWon))
                 break;
-
-            Bot.BotMove(GameField);
-            if (GameOverConditions(GameField, ref Field.WhosWon))
+        
+            
+            BotBehaviour.BotMove(ref GameField);
+            Console.Clear();
+            FieldRender(GameField);
+            if (GameOverConditions(GameField, ref WhosWon))
                 break;
             
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
         }
 
-        if (WhosWon == Empty)
-            Console.WriteLine("Tie!");
-        else if (Field.WhosWon == Occupation.Bot)
-            Console.WriteLine("Bot won!");
-        else if (Field.WhosWon == Occupation.Player) Console.WriteLine("You won");
+        var str = WhosWon switch
+        {
+            Empty => "Tie!",
+            Bot => "Bot won!",
+            Player => "You won",
+            _ => "unimplemented error"
+        };
+        Console.WriteLine(str);
+        Thread.Sleep(1000);
+        Console.ReadKey();
     }
 
     

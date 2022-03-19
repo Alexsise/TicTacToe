@@ -24,7 +24,7 @@ public static class Program
             if (GameOverConditions(GameField, ref WhosWon))
                 break;
             
-            Thread.Sleep(500);
+            // Thread.Sleep(500);
         }
 
         var str = WhosWon switch

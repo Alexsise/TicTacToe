@@ -5,12 +5,15 @@ using static Field.Occupation;
 public static class BotBehaviour
 {
     public static void BotMove(ref Occupation[] gameField)
+        
+    //TODO Реализовать выбор сложности
+    
     {
         int bestMove = default;
         
         Console.WriteLine("Bot is thinking, what to do...\n");
 
-        Thread.Sleep(1000);
+        // Thread.Sleep(1000);
         var bestScore = int.MinValue;
         
         for (var i = 0; i < gameField.Length; i++)
@@ -21,7 +24,7 @@ public static class BotBehaviour
                 // var bestScore = int.MinValue;
                 var score = MiniMax(ref gameField, 0, false);
                 gameField[i] = Empty;
-                if (score > bestScore)
+                if (score >= bestScore)
                 {
                     bestScore = score;
                     bestMove = i;

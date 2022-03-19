@@ -2,8 +2,8 @@ namespace TicTacToe;
 using static Field.Occupation;
 public static class Field
 {
-    public static Occupation[] GameField = {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty};
-    public static Occupation WhosWon;
+    internal static Occupation[] GameField = {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty};
+    internal static Occupation WhosWon;
     
     public enum Occupation
     {

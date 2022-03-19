@@ -1,4 +1,5 @@
 namespace TicTacToe;
+
 using static Field;
 using static Field.Occupation;
 
@@ -22,13 +23,11 @@ public static class PlayerBehaviour
 
             if (i is > 10 or < 1)
                 continue;
-            
+
             if (gameField[i - 1] != Empty)
                 continue;
             gameField[i - 1] = Player;
             playerTurn = false;
         }
     }
-    
-    
 }

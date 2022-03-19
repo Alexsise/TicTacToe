@@ -3,10 +3,10 @@
 using static Field;
 using static Field.Occupation;
 
-
 public static class Program
 {
     private const bool GameOver = false;
+
     public static void Main()
     {
         while (!GameOver)
@@ -16,15 +16,12 @@ public static class Program
             FieldRender(GameField);
             if (GameOverConditions(GameField, ref WhosWon))
                 break;
-        
-            
+
             BotBehaviour.BotMove(ref GameField);
             Console.Clear();
             FieldRender(GameField);
             if (GameOverConditions(GameField, ref WhosWon))
                 break;
-            
-            // Thread.Sleep(500);
         }
 
         var str = WhosWon switch
@@ -38,10 +35,6 @@ public static class Program
         Thread.Sleep(1000);
         Console.ReadKey();
     }
-
-    
-    
-    
 }
 // X - player
 // O - bot

@@ -1,18 +1,19 @@
 namespace TicTacToe;
+
 using static Field.Occupation;
+
 public static class Field
 {
-    internal static Occupation[] GameField = {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty};
-    internal static Occupation WhosWon;
-    
     public enum Occupation
     {
-        Empty = ' ', 
-        Player = 'X', 
+        Empty = ' ',
+        Player = 'X',
         Bot = 'O'
-        
     }
-    
+
+    internal static Occupation[] GameField = {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty};
+    internal static Occupation WhosWon;
+
     internal static bool GameOverConditions(Occupation[] gameField, ref Occupation whosWon)
     {
         whosWon = Empty;
@@ -21,7 +22,6 @@ public static class Field
             if (gameField[i] == Empty) continue;
             if (gameField[i] != gameField[i + 1] || gameField[i + 1] != gameField[i + 2]) continue;
             whosWon = gameField[i];
-            // FieldRender(gameField);
             return true;
         }
 
@@ -30,38 +30,32 @@ public static class Field
             if (gameField[i] == Empty) continue;
             if (gameField[i] != gameField[i + 3] || gameField[i + 3] != gameField[i + 6]) continue;
             whosWon = gameField[i];
-            // FieldRender(gameField);
             return true;
         }
-        
+
         if (gameField[4] != Empty)
-        {
             if (gameField[6] == gameField[4] && gameField[4] == gameField[2] ||
                 gameField[0] == gameField[4] && gameField[4] == gameField[8])
             {
                 whosWon = gameField[4];
-                // FieldRender(gameField);
                 return true;
             }
-        }
 
         byte occupiedSpaceCount = 0;
         foreach (var el in gameField)
-        {
             if (el is Player or Bot)
                 occupiedSpaceCount++;
-        }
-        
-        
+
+
         return occupiedSpaceCount == 9;
     }
 
     public static void FieldRender(Occupation[] gameField)
     {
-        Console.WriteLine($" {(char)gameField[6]} | {(char)gameField[7]} | {(char)gameField[8]} \n" +
+        Console.WriteLine($" {(char) gameField[6]} | {(char) gameField[7]} | {(char) gameField[8]} \n" +
                           "---+---+---\n" +
-                          $" {(char)gameField[3]} | {(char)gameField[4]} | {(char)gameField[5]} \n" +
+                          $" {(char) gameField[3]} | {(char) gameField[4]} | {(char) gameField[5]} \n" +
                           "---+---+---\n" +
-                          $" {(char)gameField[0]} | {(char)gameField[1]} | {(char)gameField[2]} \n");
+                          $" {(char) gameField[0]} | {(char) gameField[1]} | {(char) gameField[2]} \n");
     }
 }

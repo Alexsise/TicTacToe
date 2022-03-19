@@ -2,8 +2,8 @@ namespace TicTacToe;
 using static Field.Occupation;
 public static class Field
 {
-    public static Occupation[] GameField = new[] {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty};
-    public static Occupation WhosWon = Empty;
+    public static Occupation[] GameField = {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty};
+    public static Occupation WhosWon;
     
     public enum Occupation
     {
@@ -12,26 +12,15 @@ public static class Field
         Bot = 'O'
         
     }
-
-    private static void FieldRender(Occupation[] gameField)
-    {
-        Console.WriteLine($" {(char)gameField[6]} | {(char)gameField[7]} | {(char)gameField[8]} \n" +
-                          "---+---+---\n" +
-                          $" {(char)gameField[3]} | {(char)gameField[4]} | {(char)gameField[5]} \n" +
-                          "---+---+---\n" +
-                          $" {(char)gameField[0]} | {(char)gameField[1]} | {(char)gameField[2]} \n");
-    }
-
-
+    
     internal static bool GameOverConditions(Occupation[] gameField, ref Occupation whosWon)
     {
         whosWon = Empty;
-        for (var i = 0; i < 9; i += 3)
+        for (var i = 0; i < 7; i += 3)
         {
             if (gameField[i] == Empty) continue;
             if (gameField[i] != gameField[i + 1] || gameField[i + 1] != gameField[i + 2]) continue;
             whosWon = gameField[i];
-            FieldRender(gameField);
             return true;
         }
 
@@ -40,27 +29,36 @@ public static class Field
             if (gameField[i] == Empty) continue;
             if (gameField[i] != gameField[i + 3] || gameField[i + 3] != gameField[i + 6]) continue;
             whosWon = gameField[i];
-            FieldRender(gameField);
             return true;
         }
         
-        if (gameField[4] != Empty &&
-            (gameField[6] == gameField[4] || gameField[4] == gameField[2]) &&
-            (gameField[0] == gameField[4] || gameField[4] == gameField[5]))
+        if (gameField[4] != Empty)
         {
-            whosWon = gameField[4];
-            FieldRender(gameField);
-            return true;
+            if (gameField[6] == gameField[4] && gameField[4] == gameField[2] ||
+                gameField[0] == gameField[4] && gameField[4] == gameField[5])
+            {
+                whosWon = gameField[4];
+                return true;
+            }
         }
 
         byte occupiedSpaceCount = 0;
         foreach (var el in gameField)
         {
-            if (el is Occupation.Player or Occupation.Bot)
+            if (el is Player or Bot)
                 occupiedSpaceCount++;
         }
         
-        FieldRender(gameField);
+        
         return occupiedSpaceCount == 9;
+    }
+
+    public static void FieldRender(Occupation[] gameField)
+    {
+        Console.WriteLine($" {(char)gameField[6]} | {(char)gameField[7]} | {(char)gameField[8]} \n" +
+                          "---+---+---\n" +
+                          $" {(char)gameField[3]} | {(char)gameField[4]} | {(char)gameField[5]} \n" +
+                          "---+---+---\n" +
+                          $" {(char)gameField[0]} | {(char)gameField[1]} | {(char)gameField[2]} \n");
     }
 }

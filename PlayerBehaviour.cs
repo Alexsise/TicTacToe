@@ -11,7 +11,9 @@ public static class PlayerBehaviour
         while (playerTurn)
         {
             Console.Write("Choose an unoccupied field: ");
+            
             int i;
+            
             try
             {
                 i = Convert.ToInt16(Console.ReadLine());

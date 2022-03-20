@@ -49,14 +49,12 @@ public static class BotBehaviour
             if (gameField[i] == Empty)
             {
                 gameField[i] = Bot;
-                // var bestScore = int.MinValue;
                 var score = MiniMax(ref gameField, false);
                 gameField[i] = Empty;
                 if (score > bestScore)
                 {
                     bestScore = score;
                     bestMove = i;
-                    //break;
                 }
             }
     }

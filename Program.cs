@@ -1,39 +1,59 @@
 ﻿namespace TicTacToe;
 
-using static Field;
-using static Field.Occupation;
+using static Game;
 
 public static class Program
 {
-    private const bool GameOver = false;
-
     public static void Main()
     {
-        while (!GameOver)
-        {
-            PlayerBehaviour.PlayerMove(ref GameField);
-            Console.Clear();
-            FieldRender(GameField);
-            if (GameOverConditions(GameField, ref WhosWon))
-                break;
+        MainMenu();
+    }
 
-            BotBehaviour.BotMove(ref GameField);
-            Console.Clear();
-            FieldRender(GameField);
-            if (GameOverConditions(GameField, ref WhosWon))
-                break;
+    private static void MainMenu()
+    {
+        Console.Clear();
+
+        Console.WriteLine(
+            "Tic-tac-toe is a paper-and-pencil game for two players who take turns marking the spaces in a three-by-three grid with X or O.\n" +
+            "The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.\n" +
+            "It is a solved game, with a forced draw assuming best play from both players.\n");
+
+        Console.Write("1)Easy\n" +
+                      "2)Medium\n" +
+                      "3)Hard\n" +
+                      "Choose you difficulty: ");
+
+        int gameDiff = default;
+
+        try
+        {
+            gameDiff = Convert.ToInt32(Console.ReadLine());
+        }
+        catch
+        {
+            MainMenu();
         }
 
-        var str = WhosWon switch
+        if (gameDiff is >= 4 or <= 0)
+            MainMenu();
+
+        GameInit(gameDiff);
+
+        Restart();
+    }
+
+    private static void Restart()
+    {
+        try
         {
-            Empty => "Tie!",
-            Bot => "Bot won!",
-            Player => "You won",
-            _ => "unimplemented error"
-        };
-        Console.WriteLine(str);
-        Thread.Sleep(1000);
-        Console.ReadKey();
+            Console.Write("Type \"r\" or \"R\" to restart: ");
+            if (Console.ReadLine()![0] is 'r' or 'R')
+                MainMenu();
+        }
+        catch
+        {
+            Restart();
+        }
     }
 }
 // X - player

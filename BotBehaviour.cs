@@ -5,13 +5,44 @@ using static Field.Occupation;
 
 public static class BotBehaviour
 {
-    public static void BotMove(ref Occupation[] gameField)
+    public static void BotMove(ref Occupation[] gameField, int gameDiff)
     {
         int bestMove = default;
 
         Console.WriteLine("Bot is thinking, what to do...\n");
 
-        // Thread.Sleep(1000);
+        switch (gameDiff)
+        {
+            case 1:
+                RandMove(out bestMove);
+                break;
+            case 2:
+            {
+                var rnd = new Random();
+                if (rnd.Next(1, 3) < 2)
+                    RandMove(out bestMove);
+                else
+                    MiniMaxInit(ref gameField, ref bestMove);
+                break;
+            }
+            case 3:
+                MiniMaxInit(ref gameField, ref bestMove);
+                break;
+        }
+
+        gameField[bestMove] = Bot;
+    }
+
+    private static void RandMove(out int bestMove)
+    {
+        var rnd = new Random();
+        bestMove = rnd.Next(1, 9);
+        if (GameField[bestMove] != Empty)
+            RandMove(out bestMove);
+    }
+
+    private static void MiniMaxInit(ref Occupation[] gameField, ref int bestMove)
+    {
         var bestScore = int.MinValue;
 
         for (var i = 0; i < gameField.Length; i++)
@@ -19,7 +50,7 @@ public static class BotBehaviour
             {
                 gameField[i] = Bot;
                 // var bestScore = int.MinValue;
-                var score = MiniMax(ref gameField, 0, false);
+                var score = MiniMax(ref gameField, false);
                 gameField[i] = Empty;
                 if (score > bestScore)
                 {
@@ -28,12 +59,10 @@ public static class BotBehaviour
                     //break;
                 }
             }
-
-        gameField[bestMove] = Bot;
     }
 
 
-    private static int MiniMax(ref Occupation[] gameField, int depth, bool isMaximizer)
+    private static int MiniMax(ref Occupation[] gameField, bool isMaximizer)
     {
         var gameOver = GameOverConditions(gameField, ref WhosWon);
         if (gameOver)
@@ -55,7 +84,7 @@ public static class BotBehaviour
                 if (gameField[i] == Empty)
                 {
                     gameField[i] = Bot;
-                    var score = MiniMax(ref gameField, depth + 1, false);
+                    var score = MiniMax(ref gameField, false);
                     gameField[i] = Empty;
                     bestScore = Math.Max(bestScore, score);
                 }
@@ -69,7 +98,7 @@ public static class BotBehaviour
                 if (gameField[i] == Empty)
                 {
                     gameField[i] = Player;
-                    var score = MiniMax(ref gameField, depth + 1, true);
+                    var score = MiniMax(ref gameField, true);
                     gameField[i] = Empty;
                     bestScore = Math.Min(bestScore, score);
                 }
